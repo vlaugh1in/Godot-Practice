@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Scenes/Cow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Scenes/Object.tscn" type="PackedScene" id=3]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 18, 548, 14, 24, 351, 38, 357, 311, 964, 547, 468, 313, 974, 33, 467, 43 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 0, 3, 5 ), PoolIntArray( 6, 4, 5, 7 ) ]
+outlines = [ PoolVector2Array( 351, 38, 357, 311, 468, 313, 467, 43, 974, 33, 964, 547, 18, 548, 14, 24 ) ]
+
+[node name="Prototype" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 855, 97 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+edge_connection_margin = 10.0
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="Cow" parent="Navigation2D" instance=ExtResource( 2 )]
+position = Vector2( 122, 145 )
+path_to_player = NodePath("../../Player")
+
+[node name="Cow2" parent="Navigation2D" instance=ExtResource( 2 )]
+position = Vector2( 408, 499 )
+path_to_player = NodePath("../../Player")
+
+[node name="Object" parent="Navigation2D" instance=ExtResource( 3 )]
+position = Vector2( 406, 165 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Navigation2D"]
+
+[node name="YSort" type="YSort" parent="."]
